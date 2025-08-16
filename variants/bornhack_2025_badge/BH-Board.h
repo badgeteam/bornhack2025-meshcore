@@ -35,6 +35,16 @@ public:
         pixels.show();
     }
 
+    void onRadioIdle() override {
+        pixels.setPixelColor(3, pixels.Color(0, 0, 0));
+        pixels.show();
+    }
+
+    void onRadioStartReceive() override {
+        pixels.setPixelColor(3, pixels.Color(0, 255, 0));
+        pixels.show();
+    }
+
     const char* getManufacturerName() const override {
         return "BornHack Badge 2025";
     }

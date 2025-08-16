@@ -41,6 +41,7 @@ void RadioLibWrapper::begin() {
 }
 
 void RadioLibWrapper::idle() {
+  _board->onRadioIdle();
   _radio->standby();
   state = STATE_IDLE;   // need another startReceive()
 }
@@ -98,6 +99,7 @@ bool RadioLibWrapper::isInRecvMode() const {
 int RadioLibWrapper::recvRaw(uint8_t* bytes, int sz) {
   int len = 0;
   if (state & STATE_INT_READY) {
+    _board->onRadioStartReceive();
     len = _radio->getPacketLength();
     if (len > 0) {
       if (len > sz) { len = sz; }
@@ -111,6 +113,7 @@ int RadioLibWrapper::recvRaw(uint8_t* bytes, int sz) {
       }
     }
     state = STATE_IDLE;   // need another startReceive()
+    _board->onRadioIdle();
   }
 
   if (state != STATE_RX) {
