@@ -39,6 +39,8 @@ public:
   virtual const char* getManufacturerName() const = 0;
   virtual void onBeforeTransmit() { }
   virtual void onAfterTransmit() { }
+  virtual void onRadioIdle() { }
+  virtual void onRadioStartReceive() { }
   virtual void reboot() = 0;
   virtual void powerOff() { /* no op */ }
   virtual uint8_t getStartupReason() const = 0;
