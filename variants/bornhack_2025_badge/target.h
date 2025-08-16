@@ -6,11 +6,14 @@
 #include <helpers/radiolib/RadioLibWrappers.h>
 #include <helpers/radiolib/CustomSX1262Wrapper.h>
 #include <helpers/SensorManager.h>
+#include <Adafruit_NeoPixel.h>
+#include "BH-Board.h"
+
 #ifdef DISPLAY_CLASS
   #include <helpers/ui/SSD1306Display.h>
 #endif
 
-extern ESP32Board board;
+extern BornhackBadge2025 board;
 extern WRAPPER_CLASS radio_driver;
 extern SensorManager sensors;
 extern ESP32RTCClock rtc_clock;
