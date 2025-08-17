@@ -18,7 +18,6 @@ extern WRAPPER_CLASS radio_driver;
 extern SensorManager sensors;
 extern ESP32RTCClock rtc_clock;
 
-
 #ifdef DISPLAY_CLASS
   extern DISPLAY_CLASS display;
 #endif

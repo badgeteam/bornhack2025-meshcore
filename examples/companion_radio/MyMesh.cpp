@@ -331,16 +331,17 @@ void MyMesh::queueMessage(const ContactInfo &from, uint8_t txt_type, mesh::Packe
     _serial->writeFrame(frame, 1);
   }
 
-#ifdef DISPLAY_CLASS
   // we only want to show text messages on display, not cli data
   bool should_display = txt_type == TXT_TYPE_PLAIN || txt_type == TXT_TYPE_SIGNED_PLAIN;
   if (should_display) {
+#ifdef DISPLAY_CLASS
     ui_task.newMsg(path_len, from.name, text, offline_queue_len);
     if (!_serial->isConnected()) {
       ui_task.soundBuzzer(UIEventType::contactMessage);
     }
-  }
 #endif
+    board.messageCount(offline_queue_len);
+  }
 }
 
 void MyMesh::onMessageRecv(const ContactInfo &from, mesh::Packet *pkt, uint32_t sender_timestamp,
@@ -408,6 +409,7 @@ void MyMesh::onChannelMessageRecv(const mesh::GroupChannel &channel, mesh::Packe
   }
   ui_task.newMsg(path_len, channel_name, text, offline_queue_len);
 #endif
+  board.messageCount(offline_queue_len);
 }
 
 uint8_t MyMesh::onContactRequest(const ContactInfo &contact, uint32_t sender_timestamp, const uint8_t *data,
@@ -985,6 +987,7 @@ void MyMesh::handleCmdFrame(size_t len) {
 #ifdef DISPLAY_CLASS
       ui_task.msgRead(offline_queue_len);
 #endif
+      board.messageCount(offline_queue_len);
     } else {
       out_frame[0] = RESP_CODE_NO_MORE_MESSAGES;
       _serial->writeFrame(out_frame, 1);
@@ -1555,6 +1558,7 @@ void MyMesh::loop() {
 #ifdef DISPLAY_CLASS
   ui_task.setHasConnection(_serial->isConnected());
 #endif
+  board.setHasConnection(_serial->isConnected());
 }
 
 bool MyMesh::advert() {

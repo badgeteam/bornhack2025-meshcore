@@ -41,6 +41,8 @@ public:
   virtual void onAfterTransmit() { }
   virtual void onRadioIdle() { }
   virtual void onRadioStartReceive() { }
+  virtual void messageCount(int msgcount) { }
+  virtual void setHasConnection(bool connected) { }
   virtual void reboot() = 0;
   virtual void powerOff() { /* no op */ }
   virtual uint8_t getStartupReason() const = 0;
