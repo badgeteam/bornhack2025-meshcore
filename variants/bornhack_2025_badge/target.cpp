@@ -10,6 +10,9 @@ WRAPPER_CLASS radio_driver(radio, board);
 ESP32RTCClock rtc_clock;
 SensorManager sensors;
 
+#ifdef DISPLAY_CLASS
+  DISPLAY_CLASS display;
+#endif
 
 bool radio_init() {
   rtc_clock.begin();
