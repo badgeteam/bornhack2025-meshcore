@@ -20,9 +20,32 @@ public:
 
     void begin() {
         pixels.begin();
+        pixels.setBrightness(25);
         pixels.setPixelColor(0, pixels.Color(0xff, 0x14, 0x93));
         pixels.show();
+#if defined(PIN_BOARD_SDA) && defined(PIN_BOARD_SCL)
+#if PIN_BOARD_SDA >= 0 && PIN_BOARD_SCL >= 0
+        Wire.begin(PIN_BOARD_SDA, PIN_BOARD_SCL);
+#endif
+#endif
         startup_reason = BD_STARTUP_NORMAL;
+    }
+
+    void setHasConnection(bool connected) {
+        if (connected)
+            pixels.setPixelColor(2, pixels.Color(0x00, 0xff, 0x00));
+        else
+            pixels.setPixelColor(2, pixels.Color(0x00, 0x00, 0x00));
+
+    }
+
+    void messageCount(int msgcount) {
+        if (msgcount > 0) {
+            pixels.setPixelColor(4, pixels.Color(0x00, 0xff, 0x00));
+        } else {
+            pixels.setPixelColor(4, pixels.Color(0x00, 0x00, 0x00));
+        }
+        pixels.show();
     }
 
     void onBeforeTransmit() override {
